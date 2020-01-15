@@ -91,7 +91,7 @@ function imageSize(input, callback) {
         throw new TypeError('invalid invocation');
     }
     // resolve the file path
-    const filepath = path.resolve(input);
+    const filepath = input.charAt(0)=='/' ? path.normalize(input) : path.resolve(input);
     if (typeof callback === 'function') {
         queue.push(() => asyncFileToBuffer(filepath)
             .then((buffer) => process.nextTick(callback, null, lookup(buffer, filepath)))
